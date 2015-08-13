@@ -1,0 +1,23 @@
+table {
+  width: 980px;
+  border-collapse:collapse;
+  border-color: #DDD;
+  border-left: none;
+  border-right: none;
+  margin: auto;
+  }
+
+thead th {
+  border-left: none;
+  border-right: none;
+}
+
+td {
+  text-align: center;
+  border-left: none;
+  border-right: none;
+}
+
+tbody tr:nth-child(odd) td {
+  background-color: #F9F9F9;
+}
