@@ -9,6 +9,7 @@ $("#scoreList").on('click', 'th', function() {
         '<td>' + elem.chinese + '</td>' +
         '<td>' + elem.math + '</td>' +
         '<td>' + elem.english + '</td>' +
+        '<td><input type="button" value="删除"></td>' +
         '</tr>';
     }).join();
     $("#scores").html(outputs);
@@ -20,3 +21,4 @@ $("#scoreList").on('click', 'th', function() {
     $(this).data("order", "des");
   }
 });
+  

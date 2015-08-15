@@ -13,6 +13,7 @@
       <th data-order="des" data-id="chinese">语文</th>
       <th data-order="des" data-id="math">数学</th>
       <th data-order="des" data-id="english">英语</th>
+      <th id="delete">功能</th>
     </thead>
     <tbody id="scores">
       {{#each entries}}
@@ -21,6 +22,7 @@
         <td>{{chinese}}</td>
         <td>{{math}}</td>
         <td>{{english}}</td>
+        <td><input type="button" value='删除'></td>
       </tr>
       {{/each}}
     </tbody>
