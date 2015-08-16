@@ -1,9 +1,11 @@
 function serializeEntries(inputs) {
   var result = [];
+  
   inputs.forEach(function(elem) {
     var existId = result.filter(function(item) {
       return item.student_id === elem.student_id;
     });
+
     if (existId.length === 0) {
       var temp = {};
       temp.student_id = elem.student_id;
@@ -18,6 +20,7 @@ function serializeEntries(inputs) {
       });
     }
   });
+
   return result;
 }
 
