@@ -27,15 +27,32 @@ app.get('*', function(req, res, next) {
 
 app.get('/', function(req, res) {
   connection.query('select * from student_info, scores, courses where student_info.student_id=scores.student_id and scores.course_id=courses.course_id;', function(err, rows) {
-  res.render('index', {entries: serializeEntries(rows)});
-  connection.end();
+    res.render('index', {
+      entries: serializeEntries(rows)
+    });
+    connection.end();
   });
 });
 
-app.get('/scores', function(req, res) {
+app.get('/sort-score', function(req, res) {
   connection.query('select * from student_info, scores, courses where student_info.student_id=scores.student_id and scores.course_id=courses.course_id;', function(err, rows) {
-  res.send(sortScore(serializeEntries(rows), req.query.sk, req.query.so));
-  connection.end();
+    res.send(sortScore(serializeEntries(rows), req.query.sk, req.query.so));
+    connection.end();
+  });
+});
+
+app.get('/delete-item', function(req, res) {
+  connection.query('delete from scores where student_id=' + req.query.sid, function(err, rows) {
+    if (err) {
+      throw err;
+    } else {
+      res.send({
+        status: 200,
+        message: {},
+        data: {}
+      });
+    }
+    connection.end();
   });
 });
 

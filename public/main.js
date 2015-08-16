@@ -1,5 +1,5 @@
 $("#scoreList").on('click', 'th', function() {
-  $.get('/scores', {
+  $.get('/sort-score', {
     sk: $(this).data("id"),
     so: $(this).data("order")
   }, function(result) {
@@ -9,7 +9,7 @@ $("#scoreList").on('click', 'th', function() {
         '<td>' + elem.chinese + '</td>' +
         '<td>' + elem.math + '</td>' +
         '<td>' + elem.english + '</td>' +
-        '<td><input type="button" value="删除"></td>' +
+        '<td><button class="del" data-id=' + elem.student_id + '>删除</td>' +
         '</tr>';
     }).join();
     $("#scores").html(outputs);
@@ -21,4 +21,13 @@ $("#scoreList").on('click', 'th', function() {
     $(this).data("order", "des");
   }
 });
-  
+
+$("#scoreList").on('click', '.del', function() {
+  $.get('/delete-item', {
+    sid: $(this).data("id")
+  }, function(result) {
+    if (result.status == 200) {
+      $(this).parent().remove();
+    }
+  });
+});
