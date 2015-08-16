@@ -1,26 +1,36 @@
 var express = require('express');
+var mysql = require('mysql');
+var hbs = require('hbs');
 var app = express();
-var scores = require('./public/scores.js');
-var sortScore = require('./public/sort-score.js');
 
+var serializeEntries = require('./public/serialize-entries.js');
 app.use(express.static('public/'));
 app.use(express.static('bower_components/'));
 
-var hbs = require('hbs');
+
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
-app.get('/', function(req, res) {
-  res.render('index', {entries: scores.getAllEntries()});
+var connection;
+app.get('*', function(res, req, next) {
+  connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'shmilyico',
+    database: 'students'
+  });
+  connection.connect(function(err) {
+    next();
+  });
 });
 
-app.get('/scores', function(req, res) {
-  var sortedArr = sortScore(scores.getAllEntries(), req.query.sk, req.query.so);
-  res.send(sortedArr);
+app.get('/', function(req, res) {
+  connection.query('select * from student_info, scores, courses where student_info.student_id=scores.student_id and scores.course_id=courses.course_id;', function(err, rows) {
+  res.render('index', {entries: serializeEntries(rows)});
+  connection.end();
+  });
 });
 
 var server = app.listen(3000, function() {
-  var host = server.address().address;
-  var post = server.address().port;
-  console.log('app listening at http://%s:%s',host, post);
+  console.log("haha");
 });
