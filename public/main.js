@@ -32,7 +32,7 @@ $("#scoreList").on('click', '.del', function() {
       },
     success: function(result) {
       if (result.status == 200) {
-        $(that).parent().parent().remove();
+        $(that).closest('tr').remove();
       }
     }
   });
@@ -62,6 +62,11 @@ $('#scoreList').on('click', '.append', function() {
         math + "</td><td>" +
         english + "</td><td><button class='del' data-id=" +
         id + ">X</td></tr>");
+        $(that).closest("tr").html("<td><input type='text' class='name'></td>" +
+                "<td><input type='text' class='chinese'></td>" +
+                "<td><input type='text' class='math'></td>" +
+                "<td><input type='text' class='english'></td>" +
+                "<td><button class='append' >＋</td>");
       }
     }
   });
