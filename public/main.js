@@ -40,10 +40,10 @@ $("#scoreList").on('click', '.del', function() {
 
 $('#scoreList').on('click', '.append', function() {
   var that = this;
-  var name = $(this).closest(".name").val();
-  var chinese = $(this).closest(".chinese").val();
-  var math = $(this).closest(".math").val();
-  var english = $(this).closest(".english").val();
+  var name = $(this).closest("tr").find('.name').val();
+  var chinese = $(this).closest("tr").find('.chinese').val();
+  var math = $(this).closest("tr").find('.math').val();
+  var english = $(this).closest("tr").find('.english').val();
   $.ajax({
     type: "POST",
     url: '/append-item',
@@ -55,12 +55,12 @@ $('#scoreList').on('click', '.append', function() {
     },
     success: function(result) {
       if (result.status == 200) {
-        var id = result.data.sid;
-        $(that).closest("#scores").append("<tr><td>" +
+        var id =  result.data.sid;
+        $(that).closest("table").find("tbody").append("<tr><td>" +
         name + "</td><td>" +
         chinese + "</td><td>" +
         math + "</td><td>" +
-        english + "</td><td><button class='del' data-id=" + 
+        english + "</td><td><button class='del' data-id=" +
         id + ">X</td></tr>");
       }
     }

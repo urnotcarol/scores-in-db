@@ -47,7 +47,7 @@ app.get('/sort-score', function(req, res) {
 });
 
 app.delete('/delete-item', function(req, res, fields) {
-  connection.query('delete from scores where student_id=' + req.body.sid, function(err, rows) {
+  connection.query('delete from scores where student_id=' + req.body.sid, function(err, result) {
     if (err) {
       throw err;
     } else {
@@ -61,6 +61,37 @@ app.delete('/delete-item', function(req, res, fields) {
   });
 });
 
+app.post('/append-item', function(req, res) {
+  var currStudentId;
+  var insertNameSQL = 'insert into student_info (name) values ( "' + req.body.sname + '");';
+  connection.query(insertNameSQL, function(err, rows) {
+    if (err) {
+      throw err;
+    } else {
+      currStudentId = rows.insertId;
+      var insertScoreSQL = "insert into scores values (''," + currStudentId + ", 1, " + req.body.schinese + ")," +
+        "(''," + currStudentId + ", 2, " + req.body.smath + ")," +
+        "(''," + currStudentId + ", 3, " + req.body.senglish + ");";
+      connection.query(insertScoreSQL,
+        function(err, rows) {
+          if (err) {
+            throw err;
+          } else {
+            res.send({
+              status: 200,
+              message: {},
+              data: {
+                sid: currStudentId
+              }
+            });
+          }
+        }
+      );
+    }
+    connection.end();
+  });
+});
+
 var server = app.listen(3000, function() {
-  console.log("haha");
+  console.log("listen at http://localhost/3000");
 });
