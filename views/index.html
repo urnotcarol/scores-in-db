@@ -17,16 +17,24 @@
     </thead>
     <tbody id="scores">
       {{#each entries}}
-      <tr>
+      <tr class={{student_id}}>
         <td>{{name}}</td>
         <td>{{chinese}}</td>
         <td>{{math}}</td>
         <td>{{english}}</td>
-        <td><button class='del' data-id={{student_id}}>删除</td>
+        <td><button class='del' data-id={{student_id}}>X</td>
       </tr>
       {{/each}}
     </tbody>
-  </table>
+    <tfoot>
+      <tr>
+        <td><input type="text" class='name'></td>
+        <td><input type="text" class='chinese'></td>
+        <td><input type="text" class='math'></td>
+        <td><input type="text" class='english'></td>
+        <td><button class='append' >＋</td>
+      </tr>
+    </tfoot>
 
   <link rel="stylesheet" href="main.css">
   <script src="jquery/dist/jquery.js"></script>

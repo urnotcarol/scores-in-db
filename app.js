@@ -1,10 +1,15 @@
 var express = require('express');
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 var hbs = require('hbs');
 var app = express();
 
 var serializeEntries = require('./public/serialize-entries.js');
 var sortScore = require('./public/sort-score.js');
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static('public/'));
 app.use(express.static('bower_components/'));
 
@@ -13,7 +18,7 @@ app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
 var connection;
-app.get('*', function(req, res, next) {
+app.all('*', function(req, res, next) {
   connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -41,8 +46,8 @@ app.get('/sort-score', function(req, res) {
   });
 });
 
-app.get('/delete-item', function(req, res) {
-  connection.query('delete from scores where student_id=' + req.query.sid, function(err, rows) {
+app.delete('/delete-item', function(req, res, fields) {
+  connection.query('delete from scores where student_id=' + req.body.sid, function(err, rows) {
     if (err) {
       throw err;
     } else {
